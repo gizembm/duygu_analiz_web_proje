@@ -1,0 +1,46 @@
+﻿@model List<yazilimMuhProje.Models.Entities.Resimler>
+
+@{
+    ViewBag.Title = "Ana Sayfa";
+}
+
+<!-- Header Bölümü -->
+<header>
+    <h1>Resim Paylaşım Platformu</h1>
+</header>
+
+<!-- Kullanıcı Giriş Durumu -->
+<div class="user-actions">
+    @if (Session["KullaniciAdi"] != null)
+    {
+        <div>
+            Hoş geldiniz, @Session["KullaniciAdi"]!
+            <a class="button" href="@Url.Action("Cikis", "Kullanici")">Çıkış Yap</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            <a class="button" href="@Url.Action("Giris", "Kullanici")">Giriş Yap</a>
+            @*<a class="button" href="@Url.Action("KayitOl", "Kullanici")">Kayıt Ol</a>*@
+        </div>
+
+    }
+</div>
+
+<!-- Resimler Grid -->
+<div class="container">
+    <div class="resim-grid">
+        @foreach (var resim in Model)
+        {
+            <div class="resim-card">
+                <h3>@resim.Baslik</h3>
+                <img src="@resim.ResimYolu" alt="@resim.Baslik" />
+                <p>@resim.Aciklama</p>
+                <a class="btn btn-success" href="@Url.Action("Detay", "Resim", new { id = resim.ResimId })">Detaya Git</a>
+            </div>
+        }
+    </div>
+</div>
+
+

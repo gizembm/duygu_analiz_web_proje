@@ -1,0 +1,115 @@
+﻿/* Genel Stil */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f3e9; /* Pastel bir arka plan */
+    margin: 0;
+    padding: 0;
+}
+
+/* Konteyner */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Kullanıcı Giriş Linkleri */
+.user-actions {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+    .user-actions a {
+        color: #ffffff; /* Yazı rengi beyaz yapıldı */
+        background-color: #2980b9; /* Mor pastel ton */
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+        .user-actions a:hover {
+            background-color: #4834d4; /* Hover rengi */
+        }
+
+/* Resim Grid Yapısı */
+.resim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Esnek ve dengeli dağılım */
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Resim Kartı */
+.resim-card {
+    background-color: #fff8f2; /* Pastel krem rengi */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+    .resim-card:hover {
+        transform: scale(1.03); /* Hover efekti */
+    }
+
+    /* Resimlerin Ölçeklendirilmesi */
+    .resim-card img {
+        width: 100%;
+        height: 200px; /* Sabit yükseklik değeri ekleyerek boyutları eşitleyin */
+        object-fit: cover; /* Resmin düzgün görünmesini sağlar */
+        border-radius: 8px;
+    }
+
+
+    /* Kart Başlık ve Açıklama */
+    .resim-card h3 {
+        font-size: 1.4em;
+        color: #2d3436;
+    }
+
+    .resim-card p {
+        color: #636e72;
+    }
+
+/* Buton Stili */
+.button {
+    background-color: #74b9ff; /* Pastel mavi */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 16px;
+    text-align: center;
+    min-width: 150px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+    .button:hover {
+        background-color: #0984e3; /* Koyu mavi hover */
+    }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #6c5ce7;
+    color: white;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+    footer a {
+        color: white;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+        }

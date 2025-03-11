@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Giriş Yap";
+}
+
+<div class="login-container">
+    <h2 class="login-title">Giriş Yap</h2>
+
+    @using (Html.BeginForm("Giris", "Kullanici", FormMethod.Post, new { @class = "login-form" }))
+    {
+        <div class="form-group">
+            <label for="Eposta">E-posta:</label>
+            @Html.TextBox("Eposta", null, new { @class = "form-control", placeholder = "E-posta adresinizi girin" })
+        </div>
+
+        <div class="form-group">
+            <label for="Sifre">Şifre:</label>
+            @Html.Password("Sifre", null, new { @class = "form-control", placeholder = "Şifrenizi girin" })
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+        </div>
+
+        <div class="form-footer">
+            <a href="@Url.Action("SifremiUnuttum","Kullanici")">Şifremi Unuttum</a> | <a href="@Url.Action("KayitOl", "Kullanici")">Hesap Oluştur</a>
+        </div>
+    }
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+</div>
+
+<style>
+    /* Login Sayfası Stil */
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .login-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        background-color: #8395a7;
+        border: none;
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+    .form-footer {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+        .form-footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+            .form-footer a:hover {
+                text-decoration: underline;
+            }
+</style>

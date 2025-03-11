@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Şifremi Unuttum";
+}
+
+<h2>Şifremi Unuttum</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.Mesaj))
+{
+    <div class="alert alert-success">@ViewBag.Mesaj</div>
+}
+
+@using (Html.BeginForm("SifremiUnuttum", "Kullanici", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="Eposta">E-posta Adresiniz:</label>
+        <input type="email" name="Eposta" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="YeniSifre">Yeni Şifre:</label>
+        <input type="password" name="YeniSifre" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="SifreOnay">Yeni Şifre (Tekrar):</label>
+        <input type="password" name="SifreOnay" class="form-control" required />
+    </div>
+    <br />
+
+    <button type="submit" class="btn btn-primary">Şifremi Güncelle</button>
+}
+
