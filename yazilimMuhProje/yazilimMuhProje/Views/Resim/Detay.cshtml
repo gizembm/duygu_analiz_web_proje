@@ -1,18 +1,50 @@
 ﻿@model yazilimMuhProje.Models.ViewModels.ResimDetayViewModel
 
 <div class="image-detail-container">
-    <h2 class="image-title">@Model.Resim.Baslik</h2>
+    <!-- Resim Başlığı ve Yıldız Puanı -->
+    <div class="image-header">
+        <h2 class="image-title">@Model.Resim.Baslik</h2>
+        <div class="rating">
+            @{
+                int toplamYorum = Model.Yorumlar.Count;
+                int olumluSayisi = Model.Yorumlar.Count(y => y.YorumAnaliz.Any() && y.YorumAnaliz.FirstOrDefault().DuyguDurumu == "Olumlu");
+                int puan = toplamYorum > 0 ? (olumluSayisi * 5 / toplamYorum) : 0;
+            }
+            @for (int i = 0; i < 5; i++)
+            {
+                <span class="star @(i < puan ? "filled-star" : "empty-star")">&#9733;</span>
+            }
+        </div>
+    </div>
+
+    <!-- Resim -->
     <img src="@Model.Resim.ResimYolu" alt="@Model.Resim.Baslik" class="image-preview" />
+
+    <!-- Spam Uyarı Mesajı -->
+    @if (TempData["HataMesaji"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["HataMesaji"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
 
     <h3 class="comments-title">Yorumlar</h3>
     @foreach (var yorum in Model.Yorumlar)
     {
-        <div class="comment">
-            <b>@(yorum.Kullanicilar != null ? yorum.Kullanicilar.KullaniciAdi : "Anonim"):</b> @yorum.YorumMetni
-            <span class="comment-analysis">
-                (@(yorum.YorumAnaliz.FirstOrDefault() != null ? yorum.YorumAnaliz.FirstOrDefault().DuyguDurumu : "Analiz Edilmedi"))
-            </span>
-        </div>
+        var analiz = yorum.YorumAnaliz.FirstOrDefault();
+        var duygu = analiz != null ? analiz.DuyguDurumu : "Analiz Edilmedi";
+        string renk = duygu == "Olumlu" ? "green" : (duygu == "Olumsuz" ? "red" : (duygu == "Tarafsız" ? "goldenrod" : "gray"));
+
+        if (duygu != "Spam")
+        {
+            <div class="comment">
+                <b>@(yorum.Kullanicilar != null ? yorum.Kullanicilar.KullaniciAdi : "Anonim"):</b> @yorum.YorumMetni
+                <span class="comment-analysis" style="color: @renk;">(@duygu)</span>
+            </div>
+        }
     }
 
     <!-- Yorum Yapma Formu -->
@@ -20,8 +52,8 @@
     @using (Html.BeginForm("YorumEkle", "Resim", FormMethod.Post))
     {
         <div class="form-group">
-            @Html.Hidden("ResimId", Model.Resim.ResimId) <!-- Resim ID'sini gizli alan olarak ekleyin -->
-            <textarea name="yorumMetni" class="form-control" rows="4" placeholder="Yorumunuzu buraya yazın..."></textarea>
+            @Html.Hidden("ResimId", Model.Resim.ResimId)
+            <textarea name="yorumMetni" class="form-control" rows="4" placeholder="Yorumunuzu buraya yazın..." required></textarea>
         </div>
 
         <div class="form-group">
@@ -31,9 +63,8 @@
 </div>
 
 <style>
-    /* Resim Detay Sayfası Stil */
     .image-detail-container {
-        max-width: 800px; /* Daha geniş bir konteyner */
+        max-width: 800px;
         margin: 50px auto;
         padding: 20px;
         background: white;
@@ -48,10 +79,28 @@
         color: #333;
     }
 
+    .rating {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .star {
+        font-size: 24px;
+        margin: 0 2px;
+    }
+
+    .filled-star {
+        color: gold;
+    }
+
+    .empty-star {
+        color: lightgray;
+    }
+
     .image-preview {
         width: 100%;
-        max-width: 800px; /* Resmin genişliği daha fazla */
-        height: auto; /* Orantılı büyütme */
+        max-width: 800px;
+        height: auto;
         border-radius: 8px;
         margin-bottom: 20px;
     }
@@ -112,4 +161,11 @@
         .btn-primary:hover {
             background-color: #2980b9;
         }
+
+    .alert {
+        margin: 20px 0;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+    }
 </style>
